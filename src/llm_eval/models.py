@@ -42,3 +42,10 @@ class JudgeVerdict(BaseModel):
 
     winner: Winner
     reason: str = Field(min_length=1)
+
+
+class JudgeGrade(BaseModel):
+    """Structured 1-5 grade of how well an answer matches the reference."""
+
+    grade: int = Field(ge=1, le=5)
+    reason: str = Field(min_length=1)
