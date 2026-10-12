@@ -1,4 +1,5 @@
 def agreement(judge: list[str], humans: list[str]) -> float:
+    """Share of positions where judge and human labels are equal."""
     if len(judge) != len(humans):
         raise ValueError("The length of judge and humans lists must be the same.")
     if len(judge) == 0:

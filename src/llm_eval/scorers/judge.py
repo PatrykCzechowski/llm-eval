@@ -20,10 +20,14 @@ _SWAPPED: dict[Winner, Winner] = {"A": "B", "B": "A", "tie": "tie"}
 
 
 class JudgeError(Exception):
-    pass
+    """The judge did not return a valid verdict."""
 
 
 def judge_once(model: ChatModel, question: str, first: str, second: str) -> Winner:
+    """Judge one ordering of the answers; retry once on an invalid verdict.
+
+    Raises JudgeError when both attempts are invalid.
+    """
     prompt = JUDGE_PROMPT.format(question=question, first=first, second=second)
     last_error: ValidationError | None = None
     for _ in range(2):
@@ -36,6 +40,7 @@ def judge_once(model: ChatModel, question: str, first: str, second: str) -> Winn
 
 
 def judge_pair(model: ChatModel, question: str, answer_a: str, answer_b: str) -> Winner:
+    """Judge both orderings; return the winner only when they agree, else tie."""
     original = judge_once(model, question, answer_a, answer_b)
     swapped = _SWAPPED[judge_once(model, question, answer_b, answer_a)]
     return original if original == swapped else "tie"

@@ -2,6 +2,8 @@ import asyncio
 
 
 class FakeModel:
+    """Test double that always returns the same answer and records calls."""
+
     def __init__(self, answer: str) -> None:
         self.answer = answer
         self.calls: list[tuple[str, str]] = []
@@ -12,6 +14,8 @@ class FakeModel:
 
 
 class FakeAsyncModel:
+    """Async test double that sleeps briefly and tracks peak concurrency."""
+
     def __init__(self, delay: float = 0.01) -> None:
         self.delay = delay
         self.active = 0
@@ -28,6 +32,8 @@ class FakeAsyncModel:
 
 
 class ScriptedModel:
+    """Test double that returns the given answers in order, then fails."""
+
     def __init__(self, answers: list[str]) -> None:
         self._answers = list(answers)
         self.calls: list[tuple[str, str]] = []
