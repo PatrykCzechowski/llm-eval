@@ -1,0 +1,20 @@
+{"id": "geo-001", "input": "What is the capital of Poland?", "reference": "Warsaw"}
+{"id": "geo-002", "input": "What is the capital of Australia?", "reference": "Canberra"}
+{"id": "geo-003", "input": "What is the capital of Canada?", "reference": "Ottawa"}
+{"id": "geo-004", "input": "What is the capital of Japan?", "reference": "Tokyo"}
+{"id": "geo-005", "input": "What is the capital of Brazil?", "reference": "Brasilia"}
+{"id": "geo-006", "input": "What is the capital of Turkey?", "reference": "Ankara"}
+{"id": "geo-007", "input": "What is the capital of Switzerland?", "reference": "Bern"}
+{"id": "geo-008", "input": "What is the capital of Egypt?", "reference": "Cairo"}
+{"id": "geo-009", "input": "What is the capital of Kenya?", "reference": "Nairobi"}
+{"id": "geo-010", "input": "What is the capital of Norway?", "reference": "Oslo"}
+{"id": "geo-011", "input": "What is the longest river in Africa?", "reference": "Nile"}
+{"id": "geo-012", "input": "What is the highest mountain on Earth?", "reference": "Everest"}
+{"id": "geo-013", "input": "What is the largest ocean on Earth?", "reference": "Pacific"}
+{"id": "geo-014", "input": "What is the largest country by area?", "reference": "Russia"}
+{"id": "geo-015", "input": "What is the smallest country in the world by area?", "reference": "Vatican City"}
+{"id": "geo-016", "input": "On which continent is the Sahara Desert?", "reference": "Africa"}
+{"id": "geo-017", "input": "Which river flows through Warsaw?", "reference": "Vistula"}
+{"id": "geo-018", "input": "Which country has the largest population in South America?", "reference": "Brazil"}
+{"id": "geo-019", "input": "Which strait separates Europe from Africa?", "reference": "Strait of Gibraltar"}
+{"id": "geo-020", "input": "What is the largest lake in Africa?", "reference": "Lake Victoria"}

@@ -1,0 +1,9 @@
+name: geografia-baseline
+dataset: datasets/geografia.jsonl
+prompt: prompts/qa.txt
+models:
+  - id: ollama:llama3.2:3b
+    params: { temperature: 0 }
+scorers: [exact]
+runner: { concurrency: 4, max_retries: 2 }
+gate: { metric: exact, min: 0.8 }
