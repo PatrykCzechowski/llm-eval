@@ -1,7 +1,7 @@
 import pytest
 
-from llm_eval.judge import JudgeError, judge_once, judge_pair
-from llm_eval.llm import ScriptedModel
+from llm_eval.providers.fake import ScriptedModel
+from llm_eval.scorers.judge import JudgeError, judge_once, judge_pair
 
 A_WINS = '{"winner": "A", "reason": "More precise."}'
 B_WINS = '{"winner": "B", "reason": "More precise."}'

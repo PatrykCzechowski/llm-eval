@@ -1,6 +1,6 @@
 import pytest
 
-from llm_eval.metrics import agreement
+from llm_eval.results.metrics import agreement
 
 
 def test_agreement_lengths_raises_value_error() -> None:

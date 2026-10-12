@@ -1,7 +1,7 @@
 from pydantic import ValidationError
 
-from llm_eval.llm import ChatModel
 from llm_eval.models import JudgeVerdict, Winner
+from llm_eval.providers.base import ChatModel
 
 JUDGE_SYSTEM = "You are an impartial judge comparing two answers to a question."
 

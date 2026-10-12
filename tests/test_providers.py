@@ -4,15 +4,10 @@ from typing import Any
 import ollama
 import pytest
 
-from llm_eval.llm import (
-    AsyncChatModel,
-    ChatModel,
-    FakeAsyncModel,
-    FakeModel,
-    OllamaModel,
-    ScriptedModel,
-    complete_many,
-)
+from llm_eval.core.runner import complete_many
+from llm_eval.providers.base import AsyncChatModel, ChatModel
+from llm_eval.providers.fake import FakeAsyncModel, FakeModel, ScriptedModel
+from llm_eval.providers.ollama import OllamaModel
 
 
 def test_fake_model_is_chat_model() -> None:

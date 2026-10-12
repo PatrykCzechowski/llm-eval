@@ -6,7 +6,7 @@ Configure with environment variables, e.g. to use Ollama on another machine:
 
 import os
 
-from llm_eval.llm import DEFAULT_OLLAMA_HOST, OllamaModel
+from llm_eval.providers.ollama import DEFAULT_OLLAMA_HOST, OllamaModel
 
 
 def main() -> None:
