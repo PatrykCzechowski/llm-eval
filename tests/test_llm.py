@@ -10,6 +10,7 @@ from llm_eval.llm import (
     FakeAsyncModel,
     FakeModel,
     OllamaModel,
+    ScriptedModel,
     complete_many,
 )
 
@@ -119,3 +120,17 @@ async def test_complete_many_returns_empty_list_for_no_prompts() -> None:
 async def test_complete_many_rejects_non_positive_limit() -> None:
     with pytest.raises(ValueError):
         await complete_many(FakeAsyncModel(), "Be brief.", ["question"], limit=0)
+
+
+def test_scripted_model_returns_answers_in_order() -> None:
+    model: ChatModel = ScriptedModel(["first", "second"])
+
+    assert model.complete("s", "u1") == "first"
+    assert model.complete("s", "u2") == "second"
+
+
+def test_scripted_model_raises_when_answers_run_out() -> None:
+    model = ScriptedModel([])
+
+    with pytest.raises(RuntimeError):
+        model.complete("s", "u")

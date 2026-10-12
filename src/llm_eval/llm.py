@@ -71,3 +71,15 @@ async def complete_many(
             return await model.complete(system, prompt)
 
     return await asyncio.gather(*(limited(prompt) for prompt in prompts))
+
+
+class ScriptedModel:
+    def __init__(self, answers: list[str]) -> None:
+        self._answers = list(answers)
+        self.calls: list[tuple[str, str]] = []
+
+    def complete(self, system: str, user: str) -> str:
+        if not self._answers:
+            raise RuntimeError("ScriptedModel has no more answers.")
+        self.calls.append((system, user))
+        return self._answers.pop(0)
