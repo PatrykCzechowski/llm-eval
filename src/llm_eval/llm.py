@@ -1,3 +1,4 @@
+import asyncio
 from typing import Protocol
 
 import ollama
@@ -36,3 +37,37 @@ class OllamaModel:
         if content is None:
             raise RuntimeError(f"Model {self.model!r} returned no content.")
         return content
+
+
+class AsyncChatModel(Protocol):
+    async def complete(self, system: str, user: str) -> str: ...
+
+
+class FakeAsyncModel:
+    def __init__(self, delay: float = 0.01) -> None:
+        self.delay = delay
+        self.active = 0
+        self.max_active = 0
+
+    async def complete(self, system: str, user: str) -> str:
+        self.active += 1
+        self.max_active = max(self.max_active, self.active)
+        try:
+            await asyncio.sleep(self.delay)
+            return f"answer to: {user}"
+        finally:
+            self.active -= 1
+
+
+async def complete_many(
+    model: AsyncChatModel, system: str, prompts: list[str], limit: int = 4
+) -> list[str]:
+    if limit < 1:
+        raise ValueError(f"limit must be at least 1, got {limit}.")
+    semaphore = asyncio.Semaphore(limit)
+
+    async def limited(prompt: str) -> str:
+        async with semaphore:
+            return await model.complete(system, prompt)
+
+    return await asyncio.gather(*(limited(prompt) for prompt in prompts))
