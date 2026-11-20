@@ -1,0 +1,49 @@
+name: Tender Scout A/B report
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/tender-scout-report.yml
+      - scripts/tender_scout_ci.py
+      - src/llm_eval/results/tender_scout.py
+      - tests/test_tender_scout.py
+      - tests/test_tender_scout_ci.py
+  workflow_dispatch:
+    inputs:
+      baseline:
+        description: Baseline results prepared by scripts/tender_scout_ci.py
+        required: true
+        type: string
+      candidate:
+        description: Candidate results prepared by scripts/tender_scout_ci.py
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    name: Compare answer evaluation exports
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      PYTHONPATH: src
+      PIP_DISABLE_PIP_VERSION_CHECK: '1'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Install the report dependency
+        run: |
+          python3 -m venv "$RUNNER_TEMP/tender-report-venv"
+          "$RUNNER_TEMP/tender-report-venv/bin/python" -m pip install 'pydantic==2.14.0'
+      - name: Test the comparison on synthetic data
+        if: github.event_name == 'pull_request'
+        run: |
+          "$RUNNER_TEMP/tender-report-venv/bin/python" -m pip install 'pytest==9.1.1'
+          "$RUNNER_TEMP/tender-report-venv/bin/python" -m pytest -q tests/test_tender_scout.py tests/test_tender_scout_ci.py
+      - name: Publish the comparison in the run summary
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          "$RUNNER_TEMP/tender-report-venv/bin/python" scripts/tender_scout_ci.py summarize-event
